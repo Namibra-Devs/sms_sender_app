@@ -11,22 +11,36 @@ if (!isset($_SESSION['user'])) {
 }
 
 if (isset($_POST['submit'])) {
-  $phoneNumber = strip_tags($_POST['phoneNumber']);
   $message = strip_tags($_POST['message']);
+  $phoneNumber = strip_tags($_POST['phoneNumber']);
+  $amount = strip_tags($_POST['amount']);
+  $date = strip_tags($_POST['date']);
+  $name = strip_tags($_POST['name']);
+
+  // Message placeholders
+  $placeholders = array(
+    '{phone}' => $phoneNumber,
+    '{amount}' => $amount,
+    '{date}' => $date,
+    '{name}' => $name
+  );
+
+  // Replace placeholders in the message
+  $finalMessage = str_replace(array_keys($placeholders), array_values($placeholders), $message);
 
   $senderid = "testingapi";
-  if (!empty($message) && !empty($phoneNumber)) {
+  if (!empty($finalMessage) && !empty($phoneNumber)) {
 
     $curl = curl_init();
     $key = "10a708b0026969526aeb";
     $senderid = "testingapi";
     // $otpPhrase = "0123456789abcdefghijklmnopqrstuvwxyz";
-    //    $smsotpcode =  substr(str_shuffle($otpPhrase), 0, 12);
-    //    $message = "DO NOT SHARE! Your verification code is {$smsotpcode}. No Staff of Cryptozone will ask for this code. Don't share it!";
+    // $smsotpcode =  substr(str_shuffle($otpPhrase), 0, 12);
+    // $message = "DO NOT SHARE! Your verification code is {$smsotpcode}. No Staff of Cryptozone will ask for this code. Don't share it!";
 
 
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://api.innotechdev.com/sendmessage.php?key={$key}&message={$message}&senderid={$senderid}&phone={$phoneNumber}",
+      CURLOPT_URL => "https://api.innotechdev.com/sendmessage.php?key={$key}&message={$finalMessage}&senderid={$senderid}&phone={$phoneNumber}",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => '',
       CURLOPT_MAXREDIRS => 10,
@@ -37,10 +51,6 @@ if (isset($_POST['submit'])) {
     ));
 
     $response = curl_exec($curl);
-
-    $errorNumber = curl_errno($curl);
-    $errorMessage = curl_error($curl);
-    echo $response;
 
     curl_close($curl);
   }
@@ -64,9 +74,22 @@ if (isset($_POST['submit'])) {
   <div class="wrapper">
     <div class="message-container">
       <form class="sms-form" action="" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter the name" required />
+
         <label for="phoneNumber">Phone Number:</label>
         <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter the phone number" required />
+        <div class="grouped">
+          <div>
+            <label for="amount">Amount</label>
+            <input type="tel" id="amount" name="amount" placeholder="Enter the Amount" required />
+          </div>
 
+          <div> <label for="date">Date:</label>
+            <input type="date" id="date" name="date" placeholder="Choose date" required />
+          </div>
+
+        </div>
         <label for="message">Type your message here:</label>
         <textarea id="message" name="message" rows="6" placeholder="Type your message here" required></textarea>
 

@@ -2,7 +2,6 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f6f6f6;
   color: #454545;
-
   margin: 0;
 }
 
@@ -19,9 +18,14 @@ body {
   padding: 20px;
   border-radius: 8px;
   width: 50%;
-  min-height: 80%;
+  /* min-height: 80%; */
 }
-
+.grouped {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+}
 .sms-form {
   display: flex;
   flex-direction: column;
@@ -32,7 +36,7 @@ label {
   font-weight: bold;
 }
 
-input[type="tel"],
+input,
 textarea {
   padding: 10px;
   border: 1px solid #ccc;
@@ -62,6 +66,7 @@ button:hover {
 .navbar {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 50px;
   align-items: center;
   background-color: #f6f6f6;
   padding: 1.5rem 4rem;
@@ -85,4 +90,13 @@ button:hover {
     max-width: 97%;
     overflow-y: auto;
   }
+}
+
+/* Media query for mobile devices (portrait) */
+@media (max-width: 480px) {
+  /* Place mobile-specific styles here */
+  body {
+    font-size: 12px; /* Example: Reduce font size for mobile devices */
+  }
+  /* Add more styles as needed */
 }
