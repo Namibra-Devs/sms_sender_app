@@ -70,6 +70,11 @@ if (isset($_POST['submit'])) {
 <body>
   <nav class="navbar">
     <a href="#">Company</a>
+    <a href="./messages.php">
+      <button>
+        sent messages
+      </button>
+    </a>
   </nav>
   <div class="wrapper">
     <div class="message-container">
