@@ -1,0 +1,313 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,900&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f7f7f7;
+}
+
+/* =======================login styles============================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f6f6f6;
+  padding: 1.5rem 4rem;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.199);
+}
+.navbar a {
+  color: #000;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+.container .login-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+.form {
+  width: 35vw;
+  min-width: 25rem;
+  background-color: #fdfdfd;
+  padding: 1.5rem 4rem;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.199);
+  border-radius: 5px;
+}
+.form h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.form a {
+  text-decoration: none;
+  color: #000;
+}
+.form-details {
+  display: grid;
+  row-gap: 1rem;
+  padding-bottom: 2rem;
+}
+.form-details label {
+  font-size: 1.2rem;
+}
+.form-details input,
+.form-details button {
+  padding: 0.7rem;
+  border-radius: 5px;
+}
+.form-details button {
+  background-color: #454545;
+  margin-top: 1.5rem;
+  border: none;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+}
+.form-details button:hover {
+  background-color: #242323;
+}
+
+/* customized styles of sweet alert */
+.colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
+}
+
+/* =======================end of login styles============================== */
+
+/* ======================= blog styles===================================== */
+.navbar-details {
+  display: flex;
+  gap: 1.5rem;
+}
+.navbar .navbar-details a:hover {
+  color: #310000;
+}
+.blogpost-section {
+  width: 80vw;
+  margin: 4rem auto;
+}
+.blogpost {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.blogpost button {
+  padding: 0.5rem 2rem;
+  background-color: #454545;
+  border: none;
+  color: #fff;
+  border-radius: 2px;
+}
+.blogpost-btns {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+.blogpost-btns a {
+  text-decoration: none;
+  color: #242323;
+  border: 1px solid #242323;
+  padding: 0.5rem;
+  border-radius: 3px;
+}
+.blogpost-details {
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.7rem;
+  justify-content: center;
+}
+.blogpost-details .blogpost-card {
+  width: 20rem;
+  position: relative;
+}
+.blogpost-details .blogpost-card img {
+  width: 100%;
+  height: 10rem;
+  border-radius: 10px 10px 0 0;
+}
+.blogpost-card-details {
+  margin-top: 1rem;
+  padding: 1rem;
+}
+.blogpost-card-date {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+.blogpost-card-date button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.blogpost-card-text h3 {
+  margin-bottom: 0.4rem;
+}
+.pop-up-menu {
+  position: absolute;
+  display: grid;
+  row-gap: 1rem;
+  right: 1.7rem;
+  top: 13rem;
+  background-color: #dcdcdc;
+  padding: 0.5rem;
+  border-radius: 2px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.199);
+  transform: scale(0);
+  transition: all 1s ease-in-out;
+}
+.pop-up-menu-show {
+  transform: scale(1);
+}
+.pop-up-menu a {
+  color: #000;
+  text-decoration: none;
+}
+
+/* ======================= form styles===================================== */
+.form-container {
+  padding: 2rem;
+  margin: 3rem auto;
+  width: 50vw;
+  display: grid;
+  justify-content: center;
+  background-color: #ffffff;
+  /* align-items: center; */
+}
+.form-container h2 {
+  margin-top: 2rem;
+}
+.basic-info,
+.Custom-fields-container .customs-field {
+  display: grid;
+  row-gap: 1rem;
+}
+.basic-info input,
+.Custom-fields-container .customs-field input {
+  width: 45vw;
+  padding: 0.7rem;
+  background-color: #e9e9e956;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+.basic-info label,
+.Custom-fields-container .customs-field label {
+  font-size: 1.2rem;
+}
+.drag-image {
+  margin: 2rem 0;
+}
+.drag-image p {
+  margin: 0.7rem 0;
+}
+#dragger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fafafa;
+  padding: 2.2rem;
+  height: 30vh;
+  border: 1px solid black;
+}
+#dragger img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#dragger .icon {
+  font-size: 45px;
+}
+#dragger h5 {
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+#browseBtn {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+#gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fafafa;
+  padding: 2.2rem;
+  height: 15vh;
+  width: 15vw;
+  border: 1px solid rgb(0, 0, 0);
+}
+#gallery .icon .fa-plus {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.text-container {
+  margin-top: 2rem;
+}
+.text-container h4 {
+  margin-bottom: 0.5rem;
+}
+.toolbar {
+  padding: 1rem;
+  background-color: #eee;
+  margin-top: 1rem;
+}
+.toolbar .btn-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  grid-gap: 3px;
+}
+.toolbar .btn-toolbar button {
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+.toolbar .btn-toolbar button:hover {
+  background-color: #f3f3f3;
+}
+#content {
+  padding: 1.2rem;
+  background-color: #fafafa;
+  border: 1px solid black;
+  height: 30vh;
+}
