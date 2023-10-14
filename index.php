@@ -12,6 +12,9 @@ if (!isset($_SESSION['user'])) {
 }
 
 $id = $_SESSION['user'];
+$Admin = new Admin($conn, "admin");
+$isAdmin = $Admin->read('id', $id)[0]['isAdmin'];
+
 if (isset($_POST['submit'])) {
   $message = strip_tags($_POST['message']);
   $phoneNumber = strip_tags($_POST['phoneNumber']);
@@ -22,7 +25,7 @@ if (isset($_POST['submit'])) {
   // Message placeholders
   $placeholders = array(
     '{phone}' => $phoneNumber,
-    '{amount}' => $amount,
+    '{amount}' => $amount . ' cedis',
     '{date}' => $date,
     '{name}' => $name
   );
@@ -107,9 +110,13 @@ if (isset($_POST['submit'])) {
   <nav class="navbar">
     <a href="#">Company</a>
     <div>
-      <a href="admins.php" class="ml"><button>
-          Admins
-        </button></a>
+      <?php
+      if ($isAdmin) {
+        echo "<a href='admins.php' class='ml'><button>";
+        echo  "Admins";
+        echo "</button></a>";
+      }
+      ?>
 
 
       <a href="analytics.php" class="ml"><button>
