@@ -75,6 +75,10 @@ $results = $fetchAdmin->readAll('id');
             </button>
         </a>
 
+        <a class="nav-link btn btn-warning text-light mr-2" href="./edit.php?id=<?php echo 1; ?>">
+            Edit
+        </a>
+
     </nav>
     <!-- modals start -->
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -98,6 +102,7 @@ $results = $fetchAdmin->readAll('id');
     <div class="container ">
         <div class="section mx-auto">
             <h1 class="text-center">Registered Admins</h1>
+
             <table id="dataTable" class="table table-bordered table-striped display">
                 <thead>
                     <tr>
