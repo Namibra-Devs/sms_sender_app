@@ -3,6 +3,7 @@ session_start();
 //IMPORT THE DB CONN AND auxiliaries.phpS
 require_once "./includes/conn.php";
 require_once "./includes/auxiliaries.php";
+
 $alert = "";
 // AUTHENTICATION
 if (!isset($_SESSION['user'])) {
@@ -11,17 +12,43 @@ if (!isset($_SESSION['user'])) {
 }
 
 $id = $_SESSION['user'];
+$adminName = $_SESSION['name'];
+$adminZone = $_SESSION['zone'];
 $Admin = new Admin($conn, "admin");
 $isAdmin = $Admin->read('id', $id)[0]['isAdmin'];
 
-$fetchMessage = new Admin($conn, "message");
+//QUERY FOR OVERALL TOTAL AMOUNT
+$sql = "SELECT SUM(amount) AS total_amount FROM message";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$totalAmount = $stmt->fetch(PDO::FETCH_ASSOC)['total_amount'];
+
+//QUERY FOR INIVIDUAL AMOUNT
+$fetchDetails = new Admin($conn, "message");
 if ($isAdmin) {
-    $results = $fetchMessage->readAll();
+    $query = "
+    SELECT 
+        a.zone AS zone,
+        a.name AS name,
+        SUM(m.amount) AS amount
+    FROM admin a
+    JOIN message m ON a.id = m.supervisor
+    GROUP BY a.zone, a.name
+";
 } else {
-    $results = $fetchMessage->read('supervisor', $id);
+    $query = "
+    SELECT 
+        a.zone AS zone,
+        a.name AS name,
+        SUM(m.amount) AS amount
+    FROM admin a
+    JOIN message m ON a.id = m.supervisor WHERE a.id= $id GROUP BY a.zone, a.name
+";
 }
-
-
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// print_r($results);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,27 +110,59 @@ if ($isAdmin) {
     </div>
     <div class="container ">
         <div class="section mx-auto">
-            <h1 class="text-center">Sent Messages</h1>
-            <table id="dataTable" class="table table-bordered table-striped display">
+            <h1 class="text-center">Analytics</h1>
+
+            <table id="dataTable1" class="table table-bordered table-striped display">
+                <h4 class="text-center text-primary">Project Earnings</h4>
+                <div>
+                    <thead>
+                        <tr>
+                            <th>Community</th>
+                            <th> Overall Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><?php echo 'Zongo Community'; ?></td>
+                            <td><?php echo $totalAmount; ?></td>
+
+                        </tr>
+
+                    </tbody>
+                </div>
+
+
+            </table>
+            <table id="dataTable<?php echo $isAdmin  ? '' : 1 ?>" class="table table-bordered table-striped display">
+                <h4 class="text-center text-primary">Zone Earnings</h4>
+
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Amount</th>
-                        <th>Date</th>
+                        <th>Zone</th>
+                        <th>Supervisor</th>
+                        <th>Total Zone Amount</th>
                     </tr>
                 </thead>
                 <tbody>
+
                     <?php foreach ($results as $row) { ?>
                         <tr>
+
+                            <td><?php echo $row['zone']; ?></td>
                             <td><?php echo $row['name']; ?></td>
-                            <td><?php echo $row['phone']; ?></td>
                             <td><?php echo $row['amount']; ?></td>
-                            <td><?php echo $row['date']; ?></td>
                         </tr>
+
                     <?php } ?>
+
                 </tbody>
+
+
+
             </table>
+
+
 
         </div>
     </div>
@@ -113,11 +172,6 @@ if ($isAdmin) {
             $('#dataTable').DataTable({});
         });
     </script>
-</body>
-
-</html>
-
-
 </body>
 
 </html>

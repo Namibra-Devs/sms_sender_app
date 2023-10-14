@@ -14,12 +14,8 @@ $id = $_SESSION['user'];
 $Admin = new Admin($conn, "admin");
 $isAdmin = $Admin->read('id', $id)[0]['isAdmin'];
 
-$fetchMessage = new Admin($conn, "message");
-if ($isAdmin) {
-    $results = $fetchMessage->readAll();
-} else {
-    $results = $fetchMessage->read('supervisor', $id);
-}
+$fetchAdmin = new Admin($conn, "admin");
+$results = $fetchAdmin->readAll('id');
 
 
 ?>
@@ -46,7 +42,7 @@ if ($isAdmin) {
         .section {
             background-color: #f6f6f6;
             padding: 20px;
-            width: 70%;
+            width: 85%;
             border: 1px solid grey;
 
         }
@@ -80,26 +76,56 @@ if ($isAdmin) {
         </a>
 
     </nav>
+    <!-- modals start -->
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" style="margin: 0;" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to delete this Farmer?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- end modal -->
     <div class="container ">
         <div class="section mx-auto">
-            <h1 class="text-center">Sent Messages</h1>
+            <h1 class="text-center">Registered Admins</h1>
             <table id="dataTable" class="table table-bordered table-striped display">
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Phone</th>
-                        <th>Amount</th>
-                        <th>Date</th>
+                        <th>Email</th>
+                        <th>Zone</th>
+                        <th>Status</th>
+                        <th>Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($results as $row) { ?>
+                    <?php foreach ($results as $result) { ?>
                         <tr>
-                            <td><?php echo $row['name']; ?></td>
-                            <td><?php echo $row['phone']; ?></td>
-                            <td><?php echo $row['amount']; ?></td>
-                            <td><?php echo $row['date']; ?></td>
+                            <td><?php echo $result['name']; ?></td>
+                            <td><?php echo $result['email']; ?></td>
+                            <td><?php echo $result['zone']; ?></td>
+                            <td><?php echo $result['isAdmin'] ? "Admin" : "Supervisor"; ?></td>
+                            <td>
+                                <ul style="display: flex" class="m-0">
+                                    <a class="nav-link btn btn-warning text-light mr-2" href="./edit.php?id=<?php echo $result['id']; ?>">
+                                        Edit
+                                    </a>
+                                    <a href="#" class="nav-link btn btn-danger text-light" data-toggle="modal" data-target="#confirm-delete" data-href="./delete.php?id=<?php echo $result['id']; ?>">
+                                        Delete
+                                    </a>
+                                </ul>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -111,6 +137,10 @@ if ($isAdmin) {
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({});
+        });
+
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
         });
     </script>
 </body>

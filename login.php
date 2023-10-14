@@ -26,6 +26,8 @@
             if ($email == $retrievedEmail && password_verify($password, $retrievedPassword)) {
                 //REDIRECT USER TO SEND SMS PAGE
                 $_SESSION['user'] = $retrievedID;
+                $_SESSION['name'] = $results[0]["name"];
+                $_SESSION['zone'] = $results[0]["zone"];
                 header("location: ./index.php");
                 exit();
             } else {

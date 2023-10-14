@@ -10,7 +10,7 @@ $message = "DO NOT SHARE! Your verification code is {$smsotpcode}. No Staff of C
 
 
 curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://api.innotechdev.com/sendmessage.php?key={$key}&message={$message}&senderid={$senderid}&phone={$phoneNumber}",
+    CURLOPT_URL => "https://api.innotechdev.com/sendmessage.php?key={$key}&message='hi charls'&senderid={$senderid}&phone=0548715098",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => '',
     CURLOPT_MAXREDIRS => 10,
