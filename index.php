@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./js/style.js"> </script>
 
-  <title>SMS Message Sender</title>
+  <title>MZDO</title>
   <style>
     .ml {
       margin-left: 30px;
