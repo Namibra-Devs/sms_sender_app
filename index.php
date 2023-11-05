@@ -117,11 +117,19 @@ if (isset($_POST['submit'])) {
         echo "</button></a>";
       }
       ?>
-
+      <a href="expenses.php" class="ml"><button>
+          Expenses
+        </button>
+      </a>
+      <a href="sponsorships.php" class="ml"><button>
+          Sponsorship
+        </button>
+      </a>
 
       <a href="analytics.php" class="ml"><button>
-          Analytics
-        </button></a>
+          Reports
+        </button>
+      </a>
 
       <a href="./messages.php" class="ml">
         <button>

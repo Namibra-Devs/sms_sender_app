@@ -17,8 +17,21 @@ $adminZone = $_SESSION['zone'];
 $Admin = new Admin($conn, "admin");
 $isAdmin = $Admin->read('id', $id)[0]['isAdmin'];
 
+if (isset($_POST['range-date-submit'])) {
+    $range = 1;
+    $start_date = $_POST['start-date'];
+    $end_date = $_POST['end-date'];
+} else {
+    $range = 0;
+}
+
 //QUERY FOR OVERALL TOTAL AMOUNT
-$sql = "SELECT SUM(amount) AS total_amount FROM message";
+if ($range) {
+    $sql = "SELECT SUM(amount) AS total_amount FROM message 
+        WHERE date >= '$start_date' AND date <= '$end_date'";
+} else {
+    $sql = "SELECT SUM(amount) AS total_amount FROM message";
+}
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $totalAmount = $stmt->fetch(PDO::FETCH_ASSOC)['total_amount'];
@@ -26,7 +39,18 @@ $totalAmount = $stmt->fetch(PDO::FETCH_ASSOC)['total_amount'];
 //QUERY FOR INIVIDUAL AMOUNT
 $fetchDetails = new Admin($conn, "message");
 if ($isAdmin) {
-    $query = "
+    if ($range) {
+        $query = "
+    SELECT 
+        a.zone AS zone,
+        a.name AS name,
+        SUM(m.amount) AS amount
+    FROM admin a
+    JOIN message m ON a.id = m.supervisor
+    WHERE date >= '$start_date' AND date <= '$end_date' GROUP BY a.zone, a.name
+";
+    } else {
+        $query = "
     SELECT 
         a.zone AS zone,
         a.name AS name,
@@ -35,7 +59,21 @@ if ($isAdmin) {
     JOIN message m ON a.id = m.supervisor
     GROUP BY a.zone, a.name
 ";
+    }
 } else {
+    if ($range) {
+    } else {
+        $query = "
+    SELECT 
+        a.zone AS zone,
+        a.name AS name,
+        SUM(m.amount) AS amount
+    FROM admin a
+    JOIN message m ON a.id = m.supervisor
+    WHERE a.id = $id AND date >= '$start_date' AND date <= '$end_date'
+    GROUP BY a.zone, a.name
+";
+    }
     $query = "
     SELECT 
         a.zone AS zone,
@@ -49,6 +87,8 @@ $stmt = $conn->prepare($query);
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // print_r($results);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,6 +149,29 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </nav>
     </div>
     <div class="container ">
+        <div class="mb-4">
+            <form action="" method="POST" class="form-row" style="display: flex; justify-content: space-evenly">
+                <div class="form-group col-md-3">
+                    <label for="start-date">Start Date</label>
+                    <input type="date" class="form-control" id="start-date" value="<?php if (isset($_POST['start-date'])) {
+                                                                                        echo $_POST['start-date'];
+                                                                                    } ?>" name="start-date">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="end-date">End Date</label>
+                    <input type="date" class="form-control" id="end-date" value="<?php if (isset($_POST['end-date'])) {
+                                                                                        echo $_POST['end-date'];
+                                                                                    } ?>" name="end-date">
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="submit" name="range-date-submit" class="mt-4 btn btn-primary">Submit</button>
+                </div>
+
+
+
+
+            </form>
+        </div>
         <div class="section mx-auto">
             <h1 class="text-center">Analytics</h1>
 
@@ -166,7 +229,19 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         </div>
     </div>
+    <script>
+        var endDate = document.getElementById('end-date');
+        var startDate = document.getElementById('start-date');
+        var clearbtn = document.getElementById('clear-range');
 
+        var ClearRange = function() {
+            console.log('clear')
+            startDate.value = '';
+            endDate.value = '';
+
+            location.reload()
+        }
+    </script>
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({});

@@ -221,7 +221,7 @@ if (isset($_POST['submitCreateAdmin'])) {
                                     <a class=" btn btn-warning px-4" href="./editadmin.php?id=<?php echo $result['id']; ?>">
                                         Edit
                                     </a>
-                                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-href="./delete.php?id=<?php echo $result['id']; ?>">
+                                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-href="./delete.php?table=admin&id=<?php echo $result['id']; ?>">
                                         Delete
                                     </a>
                                 </ul>
