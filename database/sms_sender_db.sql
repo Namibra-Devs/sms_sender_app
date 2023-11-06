@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3308
--- Generation Time: Oct 14, 2023 at 03:08 PM
+-- Generation Time: Nov 06, 2023 at 12:42 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -33,7 +33,7 @@ CREATE TABLE `admin` (
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `zone` varchar(200) NOT NULL,
-  `isAdmin` bit(5) NOT NULL DEFAULT b'0'
+  `isAdmin` int(5) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -41,11 +41,76 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `email`, `password`, `zone`, `isAdmin`) VALUES
-(1, 'Charles Bih', 'charles@gmail.com', '$2y$10$VNuTBD18rQgtmZo9ZaeeO.xZLSGchMrTL/ry8TZ3UqVgJRH4ONhhe', 'Tamale', b'00001'),
-(2, 'Karl Klark', 'bih@gmail.com', '$2y$10$VNuTBD18rQgtmZo9ZaeeO.xZLSGchMrTL/ry8TZ3UqVgJRH4ONhhe', 'sefwi', b'00000'),
-(3, 'Isaac Kwame', 'ike@gmail.com', '$2y$10$VNuTBD18rQgtmZo9ZaeeO.xZLSGchMrTL/ry8TZ3UqVgJRH4ONhhe', 'yamfo', b'00000'),
-(4, 'Isaac Kwame', 'ike1@gmail.com', '$2y$10$VNuTBD18rQgtmZo9ZaeeO.xZLSGchMrTL/ry8TZ3UqVgJRH4ONhhe', 'yamfo', b'00000'),
-(8, 'Christopher Asante', 'chris@gmail.com', '$2y$10$MG3C/2bgl75W3aaQjaQZru.DJpZsQHeOLEtN5BmUct4W0v6EjxY0q', 'Bekwai', b'11111');
+(1, 'Charles Bih', 'charles@gmail.com', '$2y$10$VNuTBD18rQgtmZo9ZaeeO.xZLSGchMrTL/ry8TZ3UqVgJRH4ONhhe', 'Tamale', 1),
+(19, 'Yussif', 'yussif@gmail.com', '$2y$10$0gUBDdI0rdsST/5Oi8ukaOihoJ6DHsf6yaTI9I/P8mnWDzkWXl4Tm', 'Tamale', 0),
+(21, 'Admin', 'admin@admin.com', '$2y$10$HabPTPMvHhuEiBwr7w8htORThT9xsnpMBsFUrlZoc81gfsPT5ngmW', 'Bawku', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expense`
+--
+
+CREATE TABLE `expense` (
+  `id` int(11) NOT NULL,
+  `purpose` varchar(255) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `approved_by` int(11) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expense`
+--
+
+INSERT INTO `expense` (`id`, `purpose`, `amount`, `approved_by`, `date`) VALUES
+(7, 'Food and party', 40, 1, '2023-11-07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message`
+--
+
+CREATE TABLE `message` (
+  `id` int(11) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `date` date DEFAULT curdate(),
+  `supervisor` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`id`, `name`, `phone`, `amount`, `date`, `supervisor`) VALUES
+(1, 'Karl Clark', '548715098', 400, '2023-10-11', 1),
+(2, 'Asare', '242155123', 480, '2023-10-18', 1),
+(17, 'Yusif', '0243666726', 20, '2023-10-15', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sponsorship`
+--
+
+CREATE TABLE `sponsorship` (
+  `id` int(11) NOT NULL,
+  `sponsee` varchar(200) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `approved_by` int(11) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sponsorship`
+--
+
+INSERT INTO `sponsorship` (`id`, `sponsee`, `amount`, `approved_by`, `date`) VALUES
+(1, 'Karl Bih', 35, 1, '2023-11-05'),
+(7, 'Asamoah', 40, 1, '2023-11-07');
 
 --
 -- Indexes for dumped tables
@@ -58,6 +123,27 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `expense`
+--
+ALTER TABLE `expense`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `approved_by` (`approved_by`);
+
+--
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `message_ibfk_1` (`supervisor`);
+
+--
+-- Indexes for table `sponsorship`
+--
+ALTER TABLE `sponsorship`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `approved_by` (`approved_by`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -65,7 +151,41 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `expense`
+--
+ALTER TABLE `expense`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `sponsorship`
+--
+ALTER TABLE `sponsorship`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`supervisor`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sponsorship`
+--
+ALTER TABLE `sponsorship`
+  ADD CONSTRAINT `sponsorship_ibfk_1` FOREIGN KEY (`approved_by`) REFERENCES `admin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

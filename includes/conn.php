@@ -1,8 +1,10 @@
 <?php
 //DATABASE CONNECTION DETAILS
-$dsn = 'mysql:host=localhost;port=3308;dbname=sms_sender_db';
-$username = 'root';
-$password = '';
+// $dsn = 'mysql:host=localhost;port=3308;dbname=sms_sender_db';
+$dsn = 'mysql:host=sdb-61.hosting.stackcp.net;dbname=mzdo_db-31393701e8';
+$username = 'charlesbih';
+$password = 'Charles2244';
+
 
 //CREATE A NEW PDO INSTANCE FOR DATABASE CONNECTION
 $conn = new PDO($dsn, $username, $password);
