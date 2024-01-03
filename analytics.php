@@ -62,26 +62,26 @@ if ($isAdmin) {
     }
 } else {
     if ($range) {
+        $query = "
+        SELECT 
+            a.zone AS zone,
+            a.name AS name,
+            SUM(m.amount) AS amount
+        FROM admin a
+        JOIN message m ON a.id = m.supervisor
+        WHERE a.id = $id AND date >= '$start_date' AND date <= '$end_date'
+        GROUP BY a.zone, a.name
+    ";
     } else {
         $query = "
-    SELECT 
-        a.zone AS zone,
-        a.name AS name,
-        SUM(m.amount) AS amount
-    FROM admin a
-    JOIN message m ON a.id = m.supervisor
-    WHERE a.id = $id AND date >= '$start_date' AND date <= '$end_date'
-    GROUP BY a.zone, a.name
-";
+        SELECT 
+            a.zone AS zone,
+            a.name AS name,
+            SUM(m.amount) AS amount
+        FROM admin a
+        JOIN message m ON a.id = m.supervisor WHERE a.id= $id GROUP BY a.zone, a.name
+    ";
     }
-    $query = "
-    SELECT 
-        a.zone AS zone,
-        a.name AS name,
-        SUM(m.amount) AS amount
-    FROM admin a
-    JOIN message m ON a.id = m.supervisor WHERE a.id= $id GROUP BY a.zone, a.name
-";
 }
 $stmt = $conn->prepare($query);
 $stmt->execute();
@@ -150,7 +150,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <div class="container ">
         <div class="mb-4">
-            <form action="" method="POST" class="form-row" style="display: flex; justify-content: space-evenly">
+            <form action="" method="POST" class="form-row" style="display: flex; flex-wrap:wrap; justify-content: space-evenly">
                 <div class="form-group col-md-3">
                     <label for="start-date">Start Date</label>
                     <input type="date" class="form-control" id="start-date" value="<?php if (isset($_POST['start-date'])) {
@@ -165,11 +165,8 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="form-group col-md-2">
                     <button type="submit" name="range-date-submit" class="mt-4 btn btn-primary">Submit</button>
+                    <a class="mt-4 btn btn-warning" href="./analytics.php">Clear</a>
                 </div>
-
-
-
-
             </form>
         </div>
         <div class="section mx-auto">

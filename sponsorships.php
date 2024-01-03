@@ -31,7 +31,7 @@ if (isset($_POST['range-date-submit'])) {
     $stmt->bindParam(':end_date', $end_date, PDO::PARAM_STR);
 } else {
     $range = 0;
-    $sql = "SELECT sponsorship.*, admin.*
+    $sql = "SELECT admin.*, sponsorship.*
         FROM sponsorship
         INNER JOIN admin ON admin.id = sponsorship.approved_by";
     $stmt = $conn->prepare($sql);
@@ -281,7 +281,9 @@ if (isset($_POST['submitSponsor'])) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($results as $result) { ?>
+                            <?php foreach ($results as $result) {
+                                // print_r($result);
+                            ?>
                                 <tr>
                                     <td><?php echo $result['sponsee']; ?></td>
                                     <td><?php echo $result['amount']; ?></td>

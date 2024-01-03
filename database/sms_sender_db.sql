@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3308
--- Generation Time: Nov 06, 2023 at 12:42 AM
+-- Generation Time: Jan 03, 2024 at 03:46 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -41,9 +41,9 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `email`, `password`, `zone`, `isAdmin`) VALUES
-(1, 'Charles Bih', 'charles@gmail.com', '$2y$10$VNuTBD18rQgtmZo9ZaeeO.xZLSGchMrTL/ry8TZ3UqVgJRH4ONhhe', 'Tamale', 1),
-(19, 'Yussif', 'yussif@gmail.com', '$2y$10$0gUBDdI0rdsST/5Oi8ukaOihoJ6DHsf6yaTI9I/P8mnWDzkWXl4Tm', 'Tamale', 0),
-(21, 'Admin', 'admin@admin.com', '$2y$10$HabPTPMvHhuEiBwr7w8htORThT9xsnpMBsFUrlZoc81gfsPT5ngmW', 'Bawku', 1);
+(1, 'Charles Bih', 'charles@gmail.com', '$2y$10$VNuTBD18rQgtmZo9ZaeeO.xZLSGchMrTL/ry8TZ3UqVgJRH4ONhhe', 'Tamale', 0),
+(21, 'Admin', 'admin@admin.com', '$2y$10$HabPTPMvHhuEiBwr7w8htORThT9xsnpMBsFUrlZoc81gfsPT5ngmW', 'Bawku', 1),
+(22, 'Amin', 'amin@gmail.com', '$2y$10$Fctk.cf4bALeMTPGrajbvOkmtrr/XAQIOGTWw6L5ez5ny3lDiqcwG', 'Keta', 1);
 
 -- --------------------------------------------------------
 
@@ -86,9 +86,9 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`id`, `name`, `phone`, `amount`, `date`, `supervisor`) VALUES
-(1, 'Karl Clark', '548715098', 400, '2023-10-11', 1),
 (2, 'Asare', '242155123', 480, '2023-10-18', 1),
-(17, 'Yusif', '0243666726', 20, '2023-10-15', 1);
+(18, 'Charles Bih', '0548715098', 20, '2023-12-15', 1),
+(19, 'Mohammed', '0548715098', 7, '2024-01-03', 21);
 
 -- --------------------------------------------------------
 
@@ -109,7 +109,7 @@ CREATE TABLE `sponsorship` (
 --
 
 INSERT INTO `sponsorship` (`id`, `sponsee`, `amount`, `approved_by`, `date`) VALUES
-(1, 'Karl Bih', 35, 1, '2023-11-05'),
+(1, 'Sponsor 1', 35, 1, '2023-11-05'),
 (7, 'Asamoah', 40, 1, '2023-11-07');
 
 --
@@ -151,25 +151,25 @@ ALTER TABLE `sponsorship`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `expense`
 --
 ALTER TABLE `expense`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `sponsorship`
 --
 ALTER TABLE `sponsorship`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

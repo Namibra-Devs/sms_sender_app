@@ -13,6 +13,7 @@ if (!isset($_SESSION['user'])) {
 
 $id = $_SESSION['user'];
 $Admin = new Admin($conn, "admin");
+
 $isAdmin = $Admin->read('id', $id)[0]['isAdmin'];
 
 $results = $Admin->readAll('id');
@@ -218,9 +219,7 @@ if (isset($_POST['submitCreateAdmin'])) {
                             <td><?php echo $result['isAdmin'] ? "Admin" : "Supervisor"; ?></td>
                             <td>
                                 <ul style="display: flex; justify-content: space-evenly" class="m-0">
-                                    <a class=" btn btn-warning px-4" href="./editadmin.php?id=<?php echo $result['id']; ?>">
-                                        Edit
-                                    </a>
+
                                     <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" data-href="./delete.php?table=admin&id=<?php echo $result['id']; ?>">
                                         Delete
                                     </a>

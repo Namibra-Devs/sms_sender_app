@@ -67,7 +67,7 @@ if (isset($_POST['submitSponsor'])) {
             'approved_by' => $approved_by,
         ];
         if ($Admin->create($data)) {
-            header('location: sponsorships.php');
+            header('location: expenses.php');
             $alert = "showAlert('success', 'New Expenses Created Successfully')";
         } else {
             $alert = "showAlert('error', 'Couldn't Create Expenses')";
